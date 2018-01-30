@@ -92,3 +92,8 @@ cut_into_lines <- function(x) {
   x <- strsplit(x, "\n", fixed = TRUE)[[1]]
   if (length(x)) x else ""
 }
+
+# Upcoming rlang ctor
+new_list_along <- function(x, names = base::names(x)) {
+  set_names(vector("list", length(x)), names)
+}

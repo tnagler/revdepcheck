@@ -5,6 +5,7 @@
 #'   * `options` contains all check parameters.
 #'   * `packages` is a data frame with the packages to check.
 #'   See details below.
+#' @param parent The package whose revdeps are tested.
 #'
 #' @details
 #' `state$packages` is a data frame with columns:
@@ -31,7 +32,7 @@
 #' @keywords internal
 #' @importFrom progress progress_bar
 
-run_event_loop <- function(state) {
+run_event_loop <- function(state, parent = NULL) {
   "!DEBUG running event loop"
 
   if (nrow(state$packages) == 0) {

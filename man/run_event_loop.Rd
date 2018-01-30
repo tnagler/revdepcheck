@@ -4,7 +4,7 @@
 \alias{run_event_loop}
 \title{This is the event loop of the revdep check process}
 \usage{
-run_event_loop(state)
+run_event_loop(state, parent = NULL)
 }
 \arguments{
 \item{state}{The full state of the check process:
@@ -13,6 +13,8 @@ run_event_loop(state)
 \item \code{packages} is a data frame with the packages to check.
 See details below.
 }}
+
+\item{parent}{The package whose revdeps are tested.}
 }
 \description{
 This is the event loop of the revdep check process

@@ -64,7 +64,7 @@ revdep_check <- function(pkg = ".",
 
   did_something <- FALSE
   repeat {
-    stage <- db_metadata_get(pkg, "todo") %||% "init"
+    stage <- db_metadata_get(pkg, "todo") %|0|% "init"
     switch(stage,
       init =    revdep_init(pkg, dependencies = dependencies, bioc = bioc),
       install = revdep_install(pkg, quiet = quiet),
@@ -134,7 +134,7 @@ revdep_install <- function(pkg = ".", quiet = FALSE) {
     with_libpaths(
       dir_find(pkg, "old"),
       with_options(
-        list(warn = 2),
+        warn = 2,
         install_packages(pkgname, quiet = quiet, repos = get_repos(bioc = TRUE))
       )
     )
@@ -148,7 +148,7 @@ revdep_install <- function(pkg = ".", quiet = FALSE) {
     with_libpaths(
       dir_find(pkg, "new"),
       with_options(
-        list(warn = 2),
+        warn = 2,
         install_local(pkg, quiet = quiet, repos = get_repos(bioc = TRUE))
       )
     )

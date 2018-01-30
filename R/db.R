@@ -199,11 +199,11 @@ db_insert <- function(pkgdir, package, version = NULL, maintainer = NULL,
   ## TODO: better way to get version, maintainer, so they are never NULL
   dbExecute(db,
     sqlInterpolate(db, q,
-      package = package, version = version %||% "",
-      maintainer = maintainer %||% "",
+      package = package, version = version %|0|% "",
+      maintainer = maintainer %|0|% "",
       status = status, which = which, duration = duration,
       starttime = as.character(starttime), result = result,
-      summary = summary %||% ""
+      summary = summary %|0|% ""
     )
   )
 }

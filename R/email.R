@@ -43,7 +43,7 @@ print.maintainers <- function(x, ...) {
 revdep_email <- function(type = c("broken", "failed"), pkg = ".", packages = NULL, draft = FALSE) {
   type <- match.arg(type)
 
-  packages <- db_results(pkg, packages)
+  packages <- db_flat_results(pkg, packages)
   status <- vapply(packages, rcmdcheck_status, character(1), USE.NAMES = FALSE)
 
   cond <- switch(type,

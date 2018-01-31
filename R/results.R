@@ -13,7 +13,7 @@ revdep_details <- function(pkg = ".", revdep) {
   assert_that(is_string(revdep))
 
   structure(
-    db_results(pkg, revdep)[[1]],
+    db_flat_results(pkg, revdep)[[1]],
     class = "revdepcheck_details"
   )
 }
@@ -30,7 +30,7 @@ print.revdepcheck_results <- function(x, ...) {
 
 revdep_summary <- function(pkg = ".") {
   structure(
-    db_results(pkg, NULL),
+    db_flat_results(pkg, NULL),
     class = "revdepcheck_results"
   )
 }

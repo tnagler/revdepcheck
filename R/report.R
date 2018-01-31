@@ -65,7 +65,7 @@ revdep_report_problems <- function(pkg = ".", file = "") {
     on.exit(options(opts), add = TRUE)
   }
 
-  comparisons <- db_results(pkg, NULL)
+  comparisons <- db_flat_results(pkg, NULL)
   n_issues <- map_int(comparisons, function(x) sum(x$cmp$change %in% c(0, 1)))
 
   lapply(comparisons[n_issues > 0], failure_details, file = file)
@@ -141,7 +141,7 @@ revdep_report_cran <- function(pkg = ".") {
   opts <- options("crayon.enabled" = FALSE)
   on.exit(options(opts), add = TRUE)
 
-  comparisons <- db_results(pkg, NULL)
+  comparisons <- db_flat_results(pkg, NULL)
 
   status <- map_chr(comparisons, function(x) x$status %|0|% "i")
   package <- map_chr(comparisons, "[[", "package")
@@ -231,7 +231,7 @@ report_libraries <- function(pkg) {
 }
 
 report_status <- function(pkg = ".") {
-  packages <- db_results(pkg, NULL)
+  packages <- db_flat_results(pkg, NULL)
   broken <- vapply(packages, is_broken, logical(1))
 
   list(
@@ -242,7 +242,7 @@ report_status <- function(pkg = ".") {
 }
 
 report_revdeps <- function(pkg = ".") {
-  comparisons <- db_results(pkg, NULL)
+  comparisons <- db_flat_results(pkg, NULL)
 
   make_summary <- function(x, type) {
     rows <- x$cmp[x$cmp$type == type, , drop = FALSE]

@@ -270,9 +270,11 @@ db_get_results <- function(pkg, revdeps) {
   list(old = old, new = new)
 }
 
-db_results <- function(pkg, revdeps) {
+db_flat_results <- function(pkg, revdeps) {
   res <- db_get_results(pkg, revdeps)
-
+  db_results_one(res)
+}
+db_results_one <- function(res) {
   packages <- union(res$old$package, res$new$package)
 
   lapply_with_names(packages, function(package) {
@@ -280,6 +282,25 @@ db_results <- function(pkg, revdeps) {
     newcheck <- checkFromJSON(res$new$result[match(package, res$new$package)])
 
     try_compare_checks(package, oldcheck, newcheck)
+  })
+
+}
+
+db_results <- function(pkg, revdeps) {
+  res <- db_get_results(pkg, revdeps)
+
+  res_list <- map(res, unnest_col, "parent")
+  res_list <- transpose(res_list)
+
+  map(res_list, db_results_one)
+}
+unnest_col <- function(df, col) {
+  ids <- unique(df[[col]])
+
+  map(set_names(ids), function(id) {
+    rows <- df[[col]] == id
+    cols <- -match(col, names(df))
+    df[rows, cols, drop = FALSE]
   })
 }
 

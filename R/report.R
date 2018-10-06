@@ -4,6 +4,9 @@
 #' You can use these functions to get intermediate reports of a [revdep_check()]
 #' running in another session.
 #'
+#' `revdep_report_partial()` writes the `README.md` and `problems.md`
+#' files with the partial results.
+#'
 #' @inheritParams revdep_check
 #' @param file File to write output to. Default will write to console.
 #' @export
@@ -190,6 +193,25 @@ revdep_report_cran <- function(pkg = ".") {
 on_cran <- function(x) {
   desc <- desc::desc(text = x$new$description)
   identical(desc$get("Repository")[[1]], "CRAN")
+}
+
+#' @export
+#' @rdname revdep_report_summary
+
+revdep_report_partial <- function(pkg = ".") {
+  pkg <- pkg_check(pkg)
+
+  status("REPORT")
+
+  root <- dir_find(pkg, "root")
+
+  message("Writing summary to 'revdep/README.md'")
+  revdep_report_summary(pkg, file = file.path(root, "README.md"))
+
+  message("Writing problems to 'revdep/problems.md'")
+  revdep_report_problems(pkg, file = file.path(root, "problems.md"))
+
+  invisible()
 }
 
 # Helpers -----------------------------------------------------------------

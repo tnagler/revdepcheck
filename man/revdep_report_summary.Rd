@@ -4,6 +4,7 @@
 \alias{revdep_report_summary}
 \alias{revdep_report_problems}
 \alias{revdep_report_cran}
+\alias{revdep_report_partial}
 \title{Markdown report of reverse dependency check results}
 \usage{
 revdep_report_summary(pkg = ".", file = "")
@@ -11,6 +12,8 @@ revdep_report_summary(pkg = ".", file = "")
 revdep_report_problems(pkg = ".", file = "")
 
 revdep_report_cran(pkg = ".")
+
+revdep_report_partial(pkg = ".")
 }
 \arguments{
 \item{pkg}{Path to package.}
@@ -20,4 +23,8 @@ revdep_report_cran(pkg = ".")
 \description{
 You can use these functions to get intermediate reports of a \code{\link[=revdep_check]{revdep_check()}}
 running in another session.
+}
+\details{
+\code{revdep_report_partial()} writes the \code{README.md} and \code{problems.md}
+files with the partial results.
 }

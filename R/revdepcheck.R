@@ -207,17 +207,7 @@ revdep_run <- function(pkg = ".", quiet = TRUE,
 
 revdep_report <- function(pkg = ".") {
   pkg <- pkg_check(pkg)
-
-  status("REPORT")
-
-  root <- dir_find(pkg, "root")
-
-  message("Writing summary to 'revdep/README.md'")
-  revdep_report_summary(pkg, file = file.path(root, "README.md"))
-
-  message("Writing problems to 'revdep/problems.md'")
-  revdep_report_problems(pkg, file = file.path(root, "problems.md"))
-
+  revdep_report_partial(pkg)
   db_metadata_set(pkg, "todo", "done")
   invisible()
 }
